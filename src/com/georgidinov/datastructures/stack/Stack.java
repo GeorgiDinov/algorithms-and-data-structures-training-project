@@ -1,4 +1,4 @@
-package com.georgidinov.algorithms.stack;
+package com.georgidinov.datastructures.stack;
 
 public interface Stack<T> {
 

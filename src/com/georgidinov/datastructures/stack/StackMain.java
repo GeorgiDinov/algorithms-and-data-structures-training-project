@@ -1,4 +1,4 @@
-package com.georgidinov.algorithms.stack;
+package com.georgidinov.datastructures.stack;
 
 import java.util.Random;
 
