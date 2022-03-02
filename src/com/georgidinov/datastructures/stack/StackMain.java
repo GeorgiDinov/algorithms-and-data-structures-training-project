@@ -9,7 +9,7 @@ public class StackMain {
 
         StackMain main = new StackMain();
 
-        Stack<Double> stackImpl = new StackImpl<>();
+        Stack<Double> stackImpl = new StackArrayImpl<>();
         main.initIntegerStack(stackImpl);
         stackImpl.print();
 
