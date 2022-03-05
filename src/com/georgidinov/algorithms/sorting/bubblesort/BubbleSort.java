@@ -1,7 +1,6 @@
 package com.georgidinov.algorithms.sorting.bubblesort;
 
 import com.georgidinov.algorithms.sorting.AbstractSorter;
-import com.georgidinov.util.MyUtil;
 import com.georgidinov.util.ThreadColor;
 
 import java.util.stream.IntStream;
@@ -24,14 +23,12 @@ public class BubbleSort extends AbstractSorter<Integer> {
             System.out.println(SINGLE_ELEMENT_ARRAY_MESSAGE);
             return;
         }
-        //bubbleSortImplOne(array);
-        bubbleSortImplTwo(array);
-        //bubbleSortImplThree(array);
+        bubbleSortFlagImpl(array);
     }
 
 
     //== different implementations of the algorithm ==
-    private void bubbleSortImplOne(Integer[] array) {
+    private void bubbleSortImpl(Integer[] array) {
         for (int last = array.length - 1; last > 0; last--) {
             for (int current = 0; current < last; current++) {
                 int next = current + 1;
@@ -42,40 +39,37 @@ public class BubbleSort extends AbstractSorter<Integer> {
         }
     }
 
-    private void bubbleSortImplTwo(Integer[] array) {
+    private void bubbleSortStreamImpl(Integer[] array) {
         int first = 0;
         int last = array.length - 1;
-        IntStream
-                .range(first, last)
-                .flatMap(index -> {
-                    MyUtil.printInColor("index=" + index + ", last=" + (last - index), ThreadColor.ANSI_BLUE);
-                    return IntStream.range(first, last - index);
-                })
+        IntStream.range(first, last)
+                .flatMap(index -> IntStream.range(first, last - index))
                 .forEach(current -> {
                     int next = current + 1;
-                    System.out.println("current=" + array[current] + ", next=" + array[next]);
                     if (array[current] > array[next]) {
-                        swap(array, (current), next);
+                        swap(array, current, next);
                     }
                 });
     }
 
-    private void bubbleSortImplThree(Integer[] array) {
-        int i = 0, n = array.length;
+    //optimized
+    private void bubbleSortFlagImpl(Integer[] array) {
+        int first = 0;
+        int last = array.length - 1;
 
-        boolean swapNeeded = true;
-        while (i < n - 1 && swapNeeded) {
-            swapNeeded = false;
-            for (int j = 1; j < n - i; j++) {
-                if (array[j - 1] > array[j]) {
-                    swap(array, (j - 1), j);
-                    swapNeeded = true;
+        while (first < last) {
+            boolean isSwapNeeded = false;
+            for (int current = 0; current < (last - first); current++) {
+                int next = current + 1;
+                if (array[current] > array[next]) {
+                    swap(array, current, next);
+                    isSwapNeeded = true;
                 }
             }
-            if (!swapNeeded) {
+            if (!isSwapNeeded) {
                 break;
             }
-            i++;
+            first++;
         }
     }
 
