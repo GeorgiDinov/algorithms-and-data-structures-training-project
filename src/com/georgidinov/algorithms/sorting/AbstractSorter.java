@@ -80,5 +80,4 @@ public abstract class AbstractSorter<T> implements Sorter<T> {
         MyUtil.printInColor(Arrays.toString(array), threadColor);
     }
 
-
 }
