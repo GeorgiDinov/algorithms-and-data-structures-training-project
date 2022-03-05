@@ -53,7 +53,7 @@ public abstract class AbstractSorter<T> implements Sorter<T> {
     protected boolean isIndexOutOfBounds(T[] array, int index) {
         validateArrayEligibilityForSorting(array);
         if (index < 0) {
-            return false;
+            return true;
         }
         return index > array.length - 1;
     }
