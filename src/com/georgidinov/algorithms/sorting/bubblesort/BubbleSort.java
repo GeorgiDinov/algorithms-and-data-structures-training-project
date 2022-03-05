@@ -58,15 +58,15 @@ public class BubbleSort extends AbstractSorter<Integer> {
         int last = array.length - 1;
 
         while (first < last) {
-            boolean isSwapNeeded = false;
+            boolean isSorted = true;
             for (int current = 0; current < (last - first); current++) {
                 int next = current + 1;
                 if (array[current] > array[next]) {
                     swap(array, current, next);
-                    isSwapNeeded = true;
+                    isSorted = false;
                 }
             }
-            if (!isSwapNeeded) {
+            if (isSorted) {
                 break;
             }
             first++;
