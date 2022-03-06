@@ -1,6 +1,5 @@
 package com.georgidinov.datastructures.stack;
 
-import java.security.InvalidParameterException;
 import java.util.EmptyStackException;
 
 import static com.georgidinov.util.ThreadColor.ANSI_GREEN;
@@ -86,14 +85,15 @@ public class StackArrayImpl<T> implements Stack<T> {
     }
 
     private void doubleSize() {
-        T[] replacingStack = (T[]) new Object[2 * stack.length];
+        int newLength = stack.length == 0 ? 1 : stack.length * 2;
+        T[] replacingStack = (T[]) new Object[newLength];
         System.arraycopy(stack, 0, replacingStack, 0, top);
         stack = replacingStack;
     }
 
     private void validateStackSizeValue(int size) {
-        if (size < 1) {
-            throw new InvalidParameterException("Stack initialization failure. The value{" + size + "} was passed to the constructor. Please provide value >= 1");
+        if (size < 0) {
+            throw new IllegalArgumentException("Stack initialization failure. Negative value={" + size + "} was passed to the constructor.");
         }
     }
 
