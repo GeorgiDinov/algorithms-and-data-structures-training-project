@@ -36,7 +36,7 @@ public class SelectionSort extends AbstractSorter<Integer> {
         }
     }
 
-    public void sortAscending(Integer[] array) {
+    private void sortAscending(Integer[] array) {
         for (int first = 0; first < array.length - 1; first++) {
             int min = first;
             for (int current = first + 1; current < array.length; current++) {
@@ -49,7 +49,7 @@ public class SelectionSort extends AbstractSorter<Integer> {
         }
     }
 
-    public void sortDescending(Integer[] array) {
+    private void sortDescending(Integer[] array) {
         for (int first = 0; first < array.length - 1; first++) {
             int max = first;
             for (int current = first + 1; current < array.length; current++) {
