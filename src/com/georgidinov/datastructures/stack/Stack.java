@@ -1,6 +1,8 @@
 package com.georgidinov.datastructures.stack;
 
-public interface Stack<T> {
+import com.georgidinov.util.iterator.DataStructure;
+
+public interface Stack<T> extends DataStructure<T> {
 
     void push(T value);
 
@@ -11,7 +13,5 @@ public interface Stack<T> {
     int size();
 
     boolean isEmpty();
-
-    void print();
 
 }

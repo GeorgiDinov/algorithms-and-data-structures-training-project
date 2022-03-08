@@ -1,5 +1,6 @@
 package com.georgidinov.datastructures.stack;
 
+import com.georgidinov.util.iterator.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +44,51 @@ class StackArrayImplTest {
         stack.peek();
         stack.push(size);
         assertEquals(3, stack.size());
+    }
+
+    @Test
+    void getIteratorEmptyStack() {
+        Iterator<Integer> iterator = stack.iterator();
+        assertNotNull(iterator);
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    void getIteratorStackOneElement() {
+        int value = 1;
+        stack.push(value);
+        Iterator<Integer> iterator = stack.iterator();
+
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        int next = iterator.next();
+        assertEquals(value, next);
+        assertFalse(iterator.hasNext());
+    }
+
+    // this iterator implementation starts iteration from the first element of the underlying structure
+    // basically in reverse for the stack order
+    @Test
+    void getIteratorStackMoreThanOneElement() {
+        //given
+        int value = 1;
+        int secondValue = 2;
+        stack.push(value);              //[2]<- top
+        stack.push(secondValue);        //[1]
+        //when
+        Iterator<Integer> iterator = stack.iterator();
+        //then
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        int next = iterator.next();// 1
+        assertEquals(value, next);
+        assertTrue(iterator.hasNext());
+
+        next = iterator.next();// 2
+        assertEquals(secondValue, next);
+        assertFalse(iterator.hasNext());
     }
 
     @Test

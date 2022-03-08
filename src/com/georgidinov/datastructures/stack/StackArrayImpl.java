@@ -1,9 +1,9 @@
 package com.georgidinov.datastructures.stack;
 
-import java.util.EmptyStackException;
+import com.georgidinov.util.iterator.ArrayIterator;
+import com.georgidinov.util.iterator.Iterator;
 
-import static com.georgidinov.util.ThreadColor.ANSI_GREEN;
-import static com.georgidinov.util.ThreadColor.ANSI_RESET;
+import java.util.EmptyStackException;
 
 public class StackArrayImpl<T> implements Stack<T> {
 
@@ -14,11 +14,6 @@ public class StackArrayImpl<T> implements Stack<T> {
 
     public StackArrayImpl() {
         top = 0;
-        // this is not appropriate initialization, but for training/ educational purposes it will do the job
-        // alternatives of this initialization could be
-        //1. use reflection and pass type 'Class<T> clazz' to the constructor and initialize the array like this -> 'stack = (T[]) Array.newInstance(clazz, size);'
-        //2. create as many implementations you want by explicitly write the type the stack will work with e.g. '... implements Stack<Integer>'
-        //3. use different underlying data structure than array like LinkedList or ArrayList if you wish the benefits of generics.
         stack = (T[]) new Object[DEFAULT_SIZE];
     }
 
@@ -26,6 +21,16 @@ public class StackArrayImpl<T> implements Stack<T> {
         validateStackSizeValue(size);
         top = 0;
         stack = (T[]) new Object[size];
+    }
+
+    /**
+     * @return {@link com.georgidinov.util.iterator.ArrayIterator}
+     * Note that this implementation starts the iteration from the first element of the array @index 0
+     * which will be the reversed order for the stack elements.
+     */
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayIterator<>(stack);
     }
 
     @Override
@@ -62,22 +67,6 @@ public class StackArrayImpl<T> implements Stack<T> {
         return top == 0;
     }
 
-    @Override
-    public void print() {
-        StringBuilder sb = new StringBuilder("Stack Elements\n");
-
-        String elementPlaceHolder = "\t[%s]";
-        String topElementPlaceHolder = ANSI_GREEN.getColor() + elementPlaceHolder + ANSI_RESET.getColor();
-
-        for (int element = top - 1; element >= 0; element--) {
-            if ((element == top - 1)) {
-                sb.append(String.format(topElementPlaceHolder, stack[element])).append("\n");
-            } else {
-                sb.append(String.format(elementPlaceHolder, stack[element])).append("\n");
-            }
-        }
-        System.out.println(sb);
-    }
 
     //== private methods ==
     private boolean isEligibleToResize() {
