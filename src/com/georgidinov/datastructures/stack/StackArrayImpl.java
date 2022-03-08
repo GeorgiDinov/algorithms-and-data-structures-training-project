@@ -3,6 +3,7 @@ package com.georgidinov.datastructures.stack;
 import com.georgidinov.util.iterator.ArrayIterator;
 import com.georgidinov.util.iterator.Iterator;
 
+import java.util.Arrays;
 import java.util.EmptyStackException;
 
 public class StackArrayImpl<T> implements Stack<T> {
@@ -25,12 +26,12 @@ public class StackArrayImpl<T> implements Stack<T> {
 
     /**
      * @return {@link com.georgidinov.util.iterator.ArrayIterator}
-     * Note that this implementation starts the iteration from the first element of the array @index 0
-     * which will be the reversed order for the stack elements.
+     * The iteration will start from the top element of the stack
      */
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator<>(stack);
+        T[] reversedStack = reverseStack();
+        return new ArrayIterator<>(reversedStack);
     }
 
     @Override
@@ -84,6 +85,17 @@ public class StackArrayImpl<T> implements Stack<T> {
         if (size < 0) {
             throw new IllegalArgumentException("Stack initialization failure. Negative value={" + size + "} was passed to the constructor.");
         }
+    }
+
+    private T[] reverseStack() {
+        T[] copy = Arrays.copyOf(stack, top);
+        int last = copy.length - 1;
+        for (int i = 0; i < copy.length / 2; i++) {
+            T temp = copy[i];
+            copy[i] = copy[last];
+            copy[last--] = temp;
+        }
+        return copy;
     }
 
 }
