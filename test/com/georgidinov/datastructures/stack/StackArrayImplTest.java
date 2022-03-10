@@ -27,7 +27,7 @@ class StackArrayImplTest {
         //given
         int stackSize = -1;
         //when
-        Exception exception = assertThrows(RuntimeException.class,
+        Exception exception = assertThrows(IllegalArgumentException.class,develop
                 () -> stack = new StackArrayImpl<>(stackSize));
         //then
         String expectedMessage = "Stack initialization failure. Negative value={" + stackSize + "} was passed to the constructor.";
