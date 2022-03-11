@@ -53,7 +53,7 @@ public abstract class AbstractSorter<T> implements Sorter<T> {
     protected boolean isIndexOutOfBounds(T[] array, int index) {
         validateArrayEligibilityForSorting(array);
         if (index < 0) {
-            return false;
+            return true;
         }
         return index > array.length - 1;
     }
@@ -79,6 +79,5 @@ public abstract class AbstractSorter<T> implements Sorter<T> {
     protected void printArrayInColor(T[] array, ThreadColor threadColor) {
         MyUtil.printInColor(Arrays.toString(array), threadColor);
     }
-
 
 }

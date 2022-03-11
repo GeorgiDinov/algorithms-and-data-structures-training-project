@@ -6,20 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.EmptyStackException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class StackArrayImplTest {
-
+class StackClassCtrParamImplTest {
 
     private Stack<Integer> stack;
 
     @BeforeEach
     void setUp() {
-        stack = new StackArrayImpl<>();
+        stack = new StackClassCtrParamImpl<>(Integer.class);
     }
 
     @Test
@@ -28,7 +23,7 @@ class StackArrayImplTest {
         int stackSize = -1;
         //when
         Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> stack = new StackArrayImpl<>(stackSize));
+                () -> stack = new StackClassCtrParamImpl<>(Integer.class, stackSize));
         //then
         String expectedMessage = "Stack initialization failure. Negative value={" + stackSize + "} was passed to the constructor.";
         String exceptionMessage = exception.getMessage();

@@ -1,25 +1,38 @@
 package com.georgidinov.datastructures.stack;
 
-import java.util.Random;
+import com.georgidinov.util.MyUtil;
+import com.georgidinov.util.ThreadColor;
+import com.georgidinov.util.iterator.Iterator;
 
 public class StackMain {
 
 
     public static void main(String[] args) {
-
-        StackMain main = new StackMain();
-
-        Stack<Double> stackImpl = new StackArrayImpl<>();
-        main.initIntegerStack(stackImpl);
-        stackImpl.print();
-
+        Stack<Integer> stack = new StackArrayImpl<>();
+        Stack<Integer> stackCtrClazz = new StackClassCtrParamImpl<>(Integer.class);
+        initIntegerStack(stack);
+        initIntegerStack(stackCtrClazz);
+        printIntegerStack(stack);
+        System.out.println();
+        printIntegerStack(stackCtrClazz);
     }
 
 
-    private <T> void initIntegerStack(Stack<T> stack) {
+    private static void initIntegerStack(Stack<Integer> stack) {
         for (int i = 0; i < 5; i++) {
-            Integer value = new Random().nextInt(10);
-            stack.push((T) value);
+            stack.push(i + 1);
+        }
+    }
+
+    private static void printIntegerStack(Stack<Integer> stack) {
+        Iterator<Integer> iterator = stack.iterator();
+        System.out.println("Stack Elements");
+
+        int iteration = 0;
+        while (iterator.hasNext()) {
+            ThreadColor messageColor = (iteration++ == 0) ? ThreadColor.ANSI_GREEN : ThreadColor.ANSI_RESET; // color stack top in green
+            String element = String.format("\t[%s]", iterator.next());
+            System.out.println(MyUtil.colorMessage(element, messageColor));
         }
     }
 
