@@ -9,8 +9,12 @@ public class StackMain {
 
     public static void main(String[] args) {
         Stack<Integer> stack = new StackArrayImpl<>();
+        Stack<Integer> stackCtrClazz = new StackClassCtrParamImpl<>(Integer.class);
         initIntegerStack(stack);
+        initIntegerStack(stackCtrClazz);
         printIntegerStack(stack);
+        System.out.println();
+        printIntegerStack(stackCtrClazz);
     }
 
 

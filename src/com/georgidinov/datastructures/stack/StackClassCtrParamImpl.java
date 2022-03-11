@@ -1,9 +1,13 @@
 package com.georgidinov.datastructures.stack;
 
+import com.georgidinov.util.iterator.ArrayIterator;
+import com.georgidinov.util.iterator.Iterator;
+
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class StackClassCtrParamImpl<T> {
+public class StackClassCtrParamImpl<T> implements Stack<T> {
 
     public static final int DEFAULT_STACK_CAPACITY = 10;
 
@@ -21,6 +25,12 @@ public class StackClassCtrParamImpl<T> {
         this.stack = (T[]) Array.newInstance(clazz, capacity);
     }
 
+
+    @Override
+    public Iterator<T> iterator() {
+        T[] reversedStack = reverseStack();
+        return new ArrayIterator<>(reversedStack);
+    }
 
     public void push(T value) {
         if (isEligibleToResize()) {
@@ -68,6 +78,17 @@ public class StackClassCtrParamImpl<T> {
         if (capacity < 0) {
             throw new IllegalArgumentException("Stack initialization failure. Negative value={" + capacity + "} was passed to the constructor.");
         }
+    }
+
+    private T[] reverseStack() {
+        T[] copy = Arrays.copyOf(stack, top);
+        int last = copy.length - 1;
+        for (int i = 0; i < copy.length / 2; i++) {
+            T temp = copy[i];
+            copy[i] = copy[last];
+            copy[last--] = temp;
+        }
+        return copy;
     }
 
 }
