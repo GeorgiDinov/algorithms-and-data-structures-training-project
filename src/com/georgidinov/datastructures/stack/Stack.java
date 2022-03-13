@@ -1,6 +1,6 @@
 package com.georgidinov.datastructures.stack;
 
-import com.georgidinov.util.iterator.DataStructure;
+import com.georgidinov.datastructures.DataStructure;
 
 public interface Stack<T> extends DataStructure<T> {
 
