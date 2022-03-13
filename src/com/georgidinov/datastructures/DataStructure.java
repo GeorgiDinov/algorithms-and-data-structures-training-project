@@ -6,4 +6,8 @@ public interface DataStructure<T> {
 
     Iterator<T> iterator();
 
+    int size();
+
+    boolean isEmpty();
+
 }

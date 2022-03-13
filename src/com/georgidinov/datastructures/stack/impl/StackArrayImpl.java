@@ -7,16 +7,16 @@ import com.georgidinov.datastructures.iterator.Iterator;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class StackArrayImpl<T> implements Stack<T> {
+import static com.georgidinov.util.ProjectConstants.DEFAULT_CAPACITY;
 
-    private static final int DEFAULT_SIZE = 10;
+public class StackArrayImpl<T> implements Stack<T> {
 
     private int top;
     private T[] stack;
 
     public StackArrayImpl() {
         top = 0;
-        stack = (T[]) new Object[DEFAULT_SIZE];
+        stack = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
     public StackArrayImpl(int size) {
@@ -76,7 +76,7 @@ public class StackArrayImpl<T> implements Stack<T> {
     }
 
     private void doubleSize() {
-        int newLength = stack.length == 0 ? DEFAULT_SIZE : stack.length * 2;
+        int newLength = stack.length == 0 ? DEFAULT_CAPACITY : stack.length * 2;
         T[] replacingStack = (T[]) new Object[newLength];
         System.arraycopy(stack, 0, replacingStack, 0, top);
         stack = replacingStack;
