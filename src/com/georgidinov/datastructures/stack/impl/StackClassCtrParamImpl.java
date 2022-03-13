@@ -8,16 +8,16 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class StackClassCtrParamImpl<T> implements Stack<T> {
+import static com.georgidinov.util.ProjectConstants.DEFAULT_CAPACITY;
 
-    public static final int DEFAULT_STACK_CAPACITY = 10;
+public class StackClassCtrParamImpl<T> implements Stack<T> {
 
     int top;
     T[] stack;
 
     public StackClassCtrParamImpl(Class<T> clazz) {
         this.top = 0;
-        this.stack = (T[]) Array.newInstance(clazz, DEFAULT_STACK_CAPACITY);
+        this.stack = (T[]) Array.newInstance(clazz, DEFAULT_CAPACITY);
     }
 
     public StackClassCtrParamImpl(Class<T> clazz, int capacity) {
@@ -69,7 +69,7 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
     }
 
     private void doubleSize() {
-        int newLength = stack.length == 0 ? 1 : stack.length * 2;
+        int newLength = stack.length == 0 ? DEFAULT_CAPACITY : stack.length * 2;
         T[] replacingStack = (T[]) Array.newInstance(stack.getClass(), newLength);
         System.arraycopy(stack, 0, replacingStack, 0, top);
         stack = replacingStack;
