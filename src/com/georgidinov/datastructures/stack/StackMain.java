@@ -1,8 +1,10 @@
 package com.georgidinov.datastructures.stack;
 
+import com.georgidinov.datastructures.stack.impl.StackArrayImpl;
+import com.georgidinov.datastructures.stack.impl.StackClassCtrParamImpl;
 import com.georgidinov.util.MyUtil;
 import com.georgidinov.util.ThreadColor;
-import com.georgidinov.util.iterator.Iterator;
+import com.georgidinov.datastructures.iterator.Iterator;
 
 public class StackMain {
 

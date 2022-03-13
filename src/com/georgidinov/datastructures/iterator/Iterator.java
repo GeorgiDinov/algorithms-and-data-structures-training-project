@@ -1,4 +1,4 @@
-package com.georgidinov.util.iterator;
+package com.georgidinov.datastructures.iterator;
 
 public interface Iterator<T> {
 

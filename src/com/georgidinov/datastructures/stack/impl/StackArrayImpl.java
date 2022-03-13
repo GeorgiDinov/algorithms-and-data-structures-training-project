@@ -1,37 +1,41 @@
-package com.georgidinov.datastructures.stack;
+package com.georgidinov.datastructures.stack.impl;
 
-import com.georgidinov.util.iterator.ArrayIterator;
-import com.georgidinov.util.iterator.Iterator;
+import com.georgidinov.datastructures.stack.Stack;
+import com.georgidinov.datastructures.iterator.impl.ArrayIterator;
+import com.georgidinov.datastructures.iterator.Iterator;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class StackClassCtrParamImpl<T> implements Stack<T> {
+public class StackArrayImpl<T> implements Stack<T> {
 
-    public static final int DEFAULT_STACK_CAPACITY = 10;
+    private static final int DEFAULT_SIZE = 10;
 
-    int top;
-    T[] stack;
+    private int top;
+    private T[] stack;
 
-    public StackClassCtrParamImpl(Class<T> clazz) {
-        this.top = 0;
-        this.stack = (T[]) Array.newInstance(clazz, DEFAULT_STACK_CAPACITY);
+    public StackArrayImpl() {
+        top = 0;
+        stack = (T[]) new Object[DEFAULT_SIZE];
     }
 
-    public StackClassCtrParamImpl(Class<T> clazz, int capacity) {
-        validateCapacity(capacity);
-        this.top = 0;
-        this.stack = (T[]) Array.newInstance(clazz, capacity);
+    public StackArrayImpl(int size) {
+        validateStackSizeValue(size);
+        top = 0;
+        stack = (T[]) new Object[size];
     }
 
-
+    /**
+     * @return {@link ArrayIterator}
+     * The iteration will start from the top element of the stack
+     */
     @Override
     public Iterator<T> iterator() {
         T[] reversedStack = reverseStack();
         return new ArrayIterator<>(reversedStack);
     }
 
+    @Override
     public void push(T value) {
         if (isEligibleToResize()) {
             doubleSize();
@@ -39,6 +43,7 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
         stack[top++] = value;
     }
 
+    @Override
     public T pop() {
         if (isEmpty()) {
             throw new EmptyStackException();
@@ -46,6 +51,7 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
         return stack[--top];
     }
 
+    @Override
     public T peek() {
         if (isEmpty()) {
             throw new EmptyStackException();
@@ -53,10 +59,12 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
         return stack[top - 1];
     }
 
+    @Override
     public int size() {
         return top;
     }
 
+    @Override
     public boolean isEmpty() {
         return top == 0;
     }
@@ -68,15 +76,15 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
     }
 
     private void doubleSize() {
-        int newLength = stack.length == 0 ? 1 : stack.length * 2;
-        T[] replacingStack = (T[]) Array.newInstance(stack.getClass(), newLength);
+        int newLength = stack.length == 0 ? DEFAULT_SIZE : stack.length * 2;
+        T[] replacingStack = (T[]) new Object[newLength];
         System.arraycopy(stack, 0, replacingStack, 0, top);
         stack = replacingStack;
     }
 
-    private void validateCapacity(int capacity) {
-        if (capacity < 0) {
-            throw new IllegalArgumentException("Stack initialization failure. Negative value={" + capacity + "} was passed to the constructor.");
+    private void validateStackSizeValue(int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("Stack initialization failure. Negative value={" + size + "} was passed to the constructor.");
         }
     }
 

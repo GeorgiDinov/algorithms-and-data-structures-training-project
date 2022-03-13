@@ -1,4 +1,4 @@
-package com.georgidinov.algorithms.sorting.testutil;
+package com.georgidinov.algorithms.sorting.sortutil;
 
 public abstract class AbstractSortingTestHelper {
 

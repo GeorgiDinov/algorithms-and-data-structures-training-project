@@ -1,6 +1,6 @@
 package com.georgidinov.algorithms.sorting.bubblesort;
 
-import com.georgidinov.algorithms.sorting.testutil.AbstractSortingTestHelper;
+import com.georgidinov.algorithms.sorting.sortutil.AbstractSortingTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
