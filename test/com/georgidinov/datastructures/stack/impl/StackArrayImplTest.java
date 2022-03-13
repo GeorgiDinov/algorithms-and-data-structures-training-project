@@ -1,6 +1,7 @@
-package com.georgidinov.datastructures.stack;
+package com.georgidinov.datastructures.stack.impl;
 
-import com.georgidinov.util.iterator.Iterator;
+import com.georgidinov.datastructures.stack.Stack;
+import com.georgidinov.datastructures.iterator.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

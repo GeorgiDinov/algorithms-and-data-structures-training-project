@@ -1,12 +1,17 @@
-package com.georgidinov.datastructures.stack;
+package com.georgidinov.datastructures.stack.impl;
 
-import com.georgidinov.util.iterator.Iterator;
+import com.georgidinov.datastructures.stack.Stack;
+import com.georgidinov.datastructures.iterator.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.EmptyStackException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StackClassCtrParamImplTest {
 
