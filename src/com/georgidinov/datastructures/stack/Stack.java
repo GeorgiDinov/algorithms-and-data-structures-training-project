@@ -10,8 +10,4 @@ public interface Stack<T> extends DataStructure<T> {
 
     T peek();
 
-    int size();
-
-    boolean isEmpty();
-
 }
