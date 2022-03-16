@@ -1,12 +1,13 @@
 package com.georgidinov.datastructures.doublelinkedlist;
 
-import com.georgidinov.datastructures.doublelinkedlist.impl.DoublyLinkedList;
+import com.georgidinov.datastructures.doublelinkedlist.impl.DoubleLinkedListImpl;
 import com.georgidinov.datastructures.iterator.Iterator;
 
 public class DoublyLinkedListMain {
 
     public static void main(String[] args) {
-        DoubleLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        DoubleLinkedList<Integer> list = new DoubleLinkedListImpl<>();
         list.add(5);
         list.add(10);
         list.add(15);
@@ -14,6 +15,7 @@ public class DoublyLinkedListMain {
         while (listIterator.hasNext()) {
             System.out.print(listIterator.next() + " ");
         }
+
     }
 
 }

@@ -10,14 +10,14 @@ import java.util.NoSuchElementException;
 
 import static com.georgidinov.util.ProjectConstants.EMPTY_LIST_EXCEPTION_MESSAGE;
 
-public class DoublyLinkedList<T extends Comparable<T>> implements DoubleLinkedList<T> {
+public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLinkedList<T> {
 
     private int size;
     private DoubleLinkedListNode<T> head;
     private DoubleLinkedListNode<T> tail;
 
 
-    public DoublyLinkedList() {
+    public DoubleLinkedListImpl() {
         this.size = 0;
         this.head = null;
         this.tail = null;
