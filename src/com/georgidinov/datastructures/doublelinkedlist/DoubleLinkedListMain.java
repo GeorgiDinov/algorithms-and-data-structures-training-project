@@ -3,7 +3,7 @@ package com.georgidinov.datastructures.doublelinkedlist;
 import com.georgidinov.datastructures.doublelinkedlist.impl.DoubleLinkedListImpl;
 import com.georgidinov.datastructures.iterator.Iterator;
 
-public class DoublyLinkedListMain {
+public class DoubleLinkedListMain {
 
     public static void main(String[] args) {
 
