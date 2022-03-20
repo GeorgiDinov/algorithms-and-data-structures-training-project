@@ -3,12 +3,14 @@ package com.georgidinov.datastructures.queue.impl;
 import com.georgidinov.datastructures.iterator.Iterator;
 import com.georgidinov.datastructures.iterator.impl.ArrayIterator;
 import com.georgidinov.datastructures.queue.Queue;
+import com.georgidinov.util.ComparableUtil;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 import static com.georgidinov.util.ProjectConstants.DEFAULT_CAPACITY;
 
-public class QueueArrayImpl<T> implements Queue<T> {
+public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
 
     private int front;
     private int back;
@@ -17,14 +19,14 @@ public class QueueArrayImpl<T> implements Queue<T> {
     public QueueArrayImpl() {
         this.front = 0;
         this.back = 0;
-        this.queue = (T[]) new Object[DEFAULT_CAPACITY];
+        this.queue = (T[]) new Comparable[DEFAULT_CAPACITY];
     }
 
     public QueueArrayImpl(int capacity) {
         validateCapacity(capacity);
         this.front = 0;
         this.back = 0;
-        this.queue = (T[]) new Object[capacity];
+        this.queue = (T[]) new Comparable[capacity];
     }
 
     @Override
@@ -85,6 +87,22 @@ public class QueueArrayImpl<T> implements Queue<T> {
         return size() == 0;
     }
 
+    @Override
+    public boolean contains(T value) {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        T[] copiedQueue = copyQueue(size());
+        int lastElementIndex = copiedQueue.length - 1;
+        for (int currentElementIndex = 0; currentElementIndex < copiedQueue.length / 2; currentElementIndex++, lastElementIndex--) {
+            if (ComparableUtil.getInstance().isEqual(copiedQueue[currentElementIndex], value)
+                    || ComparableUtil.getInstance().isEqual(copiedQueue[lastElementIndex], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //== private methods ==
     private void validateCapacity(int capacity) {
         if (capacity < 0) {
@@ -108,9 +126,9 @@ public class QueueArrayImpl<T> implements Queue<T> {
     }
 
     private T[] copyQueue(int copySize) {
-        T[] copy = (T[]) new Object[copySize];
+        T[] copy = (T[]) new Comparable[copySize];
         if (isNotWrapped()) {
-            System.arraycopy(queue, front, copy, 0, back);
+            System.arraycopy(queue, front, copy, 0, size());
         } else {
             System.arraycopy(queue, front, copy, 0, queue.length - front);
             System.arraycopy(queue, 0, copy, queue.length - front, back);

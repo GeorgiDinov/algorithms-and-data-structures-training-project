@@ -1,8 +1,8 @@
 package com.georgidinov.util;
 
-public final class MyUtil {
+public final class ThreadColorUtil {
 
-    private MyUtil() {
+    private ThreadColorUtil() {
     }
 
     public static void printInColor(String message, ThreadColor color) {

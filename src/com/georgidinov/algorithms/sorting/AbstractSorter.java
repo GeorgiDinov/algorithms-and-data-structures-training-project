@@ -1,6 +1,6 @@
 package com.georgidinov.algorithms.sorting;
 
-import com.georgidinov.util.MyUtil;
+import com.georgidinov.util.ThreadColorUtil;
 import com.georgidinov.util.ThreadColor;
 
 import java.util.Arrays;
@@ -77,7 +77,7 @@ public abstract class AbstractSorter<T> implements Sorter<T> {
     }
 
     protected void printArrayInColor(T[] array, ThreadColor threadColor) {
-        MyUtil.printInColor(Arrays.toString(array), threadColor);
+        ThreadColorUtil.printInColor(Arrays.toString(array), threadColor);
     }
 
 }

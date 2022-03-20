@@ -3,6 +3,7 @@ package com.georgidinov.datastructures.stack.impl;
 import com.georgidinov.datastructures.stack.Stack;
 import com.georgidinov.datastructures.iterator.impl.ArrayIterator;
 import com.georgidinov.datastructures.iterator.Iterator;
+import com.georgidinov.util.ComparableUtil;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import java.util.EmptyStackException;
 
 import static com.georgidinov.util.ProjectConstants.DEFAULT_CAPACITY;
 
-public class StackClassCtrParamImpl<T> implements Stack<T> {
+public class StackClassCtrParamImpl<T extends Comparable<T>> implements Stack<T> {
 
     int top;
     T[] stack;
@@ -62,6 +63,20 @@ public class StackClassCtrParamImpl<T> implements Stack<T> {
         return top == 0;
     }
 
+    @Override
+    public boolean contains(T value) {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        int lastElementIndex = top - 1;
+        for (int currentElementIndex = 0; currentElementIndex < stack.length / 2; currentElementIndex++, lastElementIndex--) {
+            if (ComparableUtil.getInstance().isEqual(stack[currentElementIndex], value)
+                    || ComparableUtil.getInstance().isEqual(stack[lastElementIndex], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //== private methods ==
     private boolean isEligibleToResize() {
