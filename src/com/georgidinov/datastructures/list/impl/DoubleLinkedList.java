@@ -1,23 +1,24 @@
-package com.georgidinov.datastructures.doublelinkedlist.impl;
+package com.georgidinov.datastructures.list.impl;
 
-import com.georgidinov.datastructures.doublelinkedlist.DoubleLinkedList;
+import com.georgidinov.datastructures.list.List;
 import com.georgidinov.datastructures.iterator.Iterator;
 import com.georgidinov.datastructures.iterator.impl.ListIterator;
 import com.georgidinov.datastructures.node.DoubleLinkedListNode;
 import com.georgidinov.datastructures.node.impl.Node;
+import com.georgidinov.util.ComparableUtil;
 
 import java.util.NoSuchElementException;
 
 import static com.georgidinov.util.ProjectConstants.EMPTY_LIST_EXCEPTION_MESSAGE;
 
-public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLinkedList<T> {
+public class DoubleLinkedList<T extends Comparable<T>> implements List<T> {
 
     private int size;
     private DoubleLinkedListNode<T> head;
     private DoubleLinkedListNode<T> tail;
 
 
-    public DoubleLinkedListImpl() {
+    public DoubleLinkedList() {
         this.size = 0;
         this.head = null;
         this.tail = null;
@@ -25,23 +26,14 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
 
 
     @Override
-    public Iterator<T> iterator() {
-        return new ListIterator<>(head);
-    }
-
-    @Override
     public void add(T value) {
         addLast(value);
     }
 
-    @Override
-    public T remove() {
-        return removeLast();
-    }
 
     @Override
     public void addFirst(T value) {
-        if (head == null) {
+        if (isEmpty()) {
             head = new Node<>(value);
             tail = head;
         } else {
@@ -54,8 +46,48 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
     }
 
     @Override
+    public void addInOrder(T value) {
+        if (isEmpty()) {
+            add(value);
+            return;
+        }
+
+        if (ComparableUtil.getInstance().isAfter(head.getValue(), value)) {
+            addFirst(value);
+            return;
+        }
+
+        DoubleLinkedListNode<T> previous = head;
+        DoubleLinkedListNode<T> next = head.getNext();
+
+        while (next != null && ComparableUtil.getInstance().isBefore(next.getValue(), value)) {
+            previous = previous.getNext();
+            next = next.getNext();
+        }
+
+        DoubleLinkedListNode<T> nodeToInsert = new Node<>(value);
+
+        previous.setNext(nodeToInsert);
+        nodeToInsert.setPrevious(previous);
+
+        nodeToInsert.setNext(next);
+        if (next != null) {
+            next.setPrevious(nodeToInsert);
+        } else {
+            tail = nodeToInsert;
+        }
+
+        size++;
+    }
+
+    @Override
+    public T remove() {
+        return removeLast();
+    }
+
+    @Override
     public T removeFirst() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
         }
         DoubleLinkedListNode<T> removed = head;
@@ -70,7 +102,7 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
 
     @Override
     public void addLast(T value) {
-        if (head == null) {
+        if (isEmpty()) {
             tail = new Node<>(value);
             head = tail;
         } else {
@@ -84,7 +116,7 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
 
     @Override
     public T removeLast() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
         }
         DoubleLinkedListNode<T> removed = tail;
@@ -99,7 +131,7 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
 
     @Override
     public T peekFirst() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
         }
         return head.getValue();
@@ -107,30 +139,17 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
 
     @Override
     public T peekLast() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
         }
         return tail.getValue();
     }
 
+
+    //== DataStructure<T> implementations ==
     @Override
-    public boolean contains(T value) {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
-        }
-        DoubleLinkedListNode<T> first = head;
-        DoubleLinkedListNode<T> last = tail;
-        if (first == last) {
-            return value.compareTo(first.getValue()) == 0;
-        }
-        while (first != last) {
-            if (first.getValue().compareTo(value) == 0 || last.getValue().compareTo(value) == 0) {
-                return true;
-            }
-            first = first.getNext();
-            last = last.getPrevious();
-        }
-        return false;
+    public Iterator<T> iterator() {
+        return new ListIterator<>(head);
     }
 
     @Override
@@ -141,6 +160,27 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
     @Override
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    @Override
+    public boolean contains(T value) {
+        if (isEmpty()) {
+            throw new NoSuchElementException(EMPTY_LIST_EXCEPTION_MESSAGE);
+        }
+        DoubleLinkedListNode<T> first = head;
+        DoubleLinkedListNode<T> last = tail;
+        if (first == last) {
+            return ComparableUtil.getInstance().isEqual(first.getValue(), value);
+        }
+        while (first != last) {
+            if (ComparableUtil.getInstance().isEqual(first.getValue(), value)
+                    || ComparableUtil.getInstance().isEqual(last.getValue(), value)) {
+                return true;
+            }
+            first = first.getNext();
+            last = last.getPrevious();
+        }
+        return false;
     }
 
 }

@@ -10,4 +10,6 @@ public interface DataStructure<T> {
 
     boolean isEmpty();
 
+    boolean contains(T value);
+
 }

@@ -6,7 +6,7 @@ import com.georgidinov.datastructures.queue.impl.QueueArrayImpl;
 public class QueueMain {
 
     public static void main(String[] args) {
-        Queue<Integer> queue = new QueueArrayImpl<>();
+        Queue<Integer> queue = new QueueArrayImpl<>(2);
         queue.add(15);
         queue.add(25);
         queue.add(35);
@@ -18,6 +18,8 @@ public class QueueMain {
         System.out.println("Peek=" + queue.peek());
         printQueue(queue);
 
+        System.out.println("Queue contains 25=" + queue.contains(25));
+        System.out.println("Queue contains 55=" + queue.contains(55));
     }
 
     private static void printQueue(Queue queue) {

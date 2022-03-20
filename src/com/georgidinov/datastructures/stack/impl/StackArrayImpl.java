@@ -3,26 +3,27 @@ package com.georgidinov.datastructures.stack.impl;
 import com.georgidinov.datastructures.stack.Stack;
 import com.georgidinov.datastructures.iterator.impl.ArrayIterator;
 import com.georgidinov.datastructures.iterator.Iterator;
+import com.georgidinov.util.ComparableUtil;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
 import static com.georgidinov.util.ProjectConstants.DEFAULT_CAPACITY;
 
-public class StackArrayImpl<T> implements Stack<T> {
+public class StackArrayImpl<T extends Comparable<T>> implements Stack<T> {
 
     private int top;
     private T[] stack;
 
     public StackArrayImpl() {
         top = 0;
-        stack = (T[]) new Object[DEFAULT_CAPACITY];
+        stack = (T[]) new Comparable[DEFAULT_CAPACITY];
     }
 
     public StackArrayImpl(int size) {
         validateStackSizeValue(size);
         top = 0;
-        stack = (T[]) new Object[size];
+        stack = (T[]) new Comparable[size];
     }
 
     /**
@@ -69,6 +70,20 @@ public class StackArrayImpl<T> implements Stack<T> {
         return top == 0;
     }
 
+    @Override
+    public boolean contains(T value) {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        int lastElementIndex = top - 1;
+        for (int currentElementIndex = 0; currentElementIndex < stack.length / 2; currentElementIndex++, lastElementIndex--) {
+            if (ComparableUtil.getInstance().isEqual(stack[currentElementIndex], value)
+                    || ComparableUtil.getInstance().isEqual(stack[lastElementIndex], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //== private methods ==
     private boolean isEligibleToResize() {
@@ -77,7 +92,7 @@ public class StackArrayImpl<T> implements Stack<T> {
 
     private void doubleSize() {
         int newLength = stack.length == 0 ? DEFAULT_CAPACITY : stack.length * 2;
-        T[] replacingStack = (T[]) new Object[newLength];
+        T[] replacingStack = (T[]) new Comparable[newLength];
         System.arraycopy(stack, 0, replacingStack, 0, top);
         stack = replacingStack;
     }
