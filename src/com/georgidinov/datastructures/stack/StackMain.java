@@ -2,7 +2,7 @@ package com.georgidinov.datastructures.stack;
 
 import com.georgidinov.datastructures.stack.impl.StackArrayImpl;
 import com.georgidinov.datastructures.stack.impl.StackClassCtrParamImpl;
-import com.georgidinov.util.MyUtil;
+import com.georgidinov.util.ThreadColorUtil;
 import com.georgidinov.util.ThreadColor;
 import com.georgidinov.datastructures.iterator.Iterator;
 
@@ -17,6 +17,11 @@ public class StackMain {
         printIntegerStack(stack);
         System.out.println();
         printIntegerStack(stackCtrClazz);
+        System.out.println("Stack contains 3 = " + stack.contains(3));
+        System.out.println("Stack contains 12 = " + stack.contains(12));
+
+        System.out.println("StackCTR contains 3 = " + stackCtrClazz.contains(3));
+        System.out.println("StackCTR contains 12 = " + stackCtrClazz.contains(12));
     }
 
 
@@ -34,7 +39,7 @@ public class StackMain {
         while (iterator.hasNext()) {
             ThreadColor messageColor = (iteration++ == 0) ? ThreadColor.ANSI_GREEN : ThreadColor.ANSI_RESET; // color stack top in green
             String element = String.format("\t[%s]", iterator.next());
-            System.out.println(MyUtil.colorMessage(element, messageColor));
+            System.out.println(ThreadColorUtil.colorMessage(element, messageColor));
         }
     }
 
