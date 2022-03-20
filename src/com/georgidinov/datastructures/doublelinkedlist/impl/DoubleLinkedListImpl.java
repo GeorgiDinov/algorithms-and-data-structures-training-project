@@ -121,10 +121,10 @@ public class DoubleLinkedListImpl<T extends Comparable<T>> implements DoubleLink
         DoubleLinkedListNode<T> first = head;
         DoubleLinkedListNode<T> last = tail;
         if (first == last) {
-            return value == first.getValue();
+            return value.compareTo(first.getValue()) == 0;
         }
         while (first != last) {
-            if (first.getValue() == value || last.getValue() == value) {
+            if (first.getValue().compareTo(value) == 0 || last.getValue().compareTo(value) == 0) {
                 return true;
             }
             first = first.getNext();
