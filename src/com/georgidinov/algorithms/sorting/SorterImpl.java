@@ -17,11 +17,12 @@ public class SorterImpl {
         for (int last = array.length - 1; last > 0; last--) {
             for (int first = 0; first < last; first++) {
                 if (array[first] > array[first + 1]) {
-                    int temp = array[first + 1];
-                    array[first + 1] = array[first];
-                    array[first] = temp;
+                    int temp = array[first];
+                    array[first] = array[first + 1];
+                    array[first + 1] = temp;
                 }
             }
+
         }
     };
 

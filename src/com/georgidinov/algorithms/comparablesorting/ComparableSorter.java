@@ -5,4 +5,6 @@ public interface ComparableSorter<T extends Comparable<T>> {
 
     void sort(T[] array);
 
+    //void sort(DataStructure<T> structure);
+
 }
